@@ -4,9 +4,9 @@ import webbrowser
 import datetime
 import time
 
-UPLOAD_HOUR = 20 # Change me to fit the upload schedule :D
-UPLOAD_MINUTE = 0 # me as well!
-CHANNEL_URL = "https://youtube.com/@theoddities_roleplay"  # Change for any channel you like
+UPLOAD_HOUR: int = 20 # Change me to fit the upload schedule :D
+UPLOAD_MINUTE: int = 0 # me as well!
+CHANNEL_URL: str = "https://youtube.com/@theoddities_roleplay"  # Change for any channel you like
 
 def Main():
     new_upload: bool = False # creates the varible that the loop is based from
@@ -31,3 +31,4 @@ def start(): # whole thing is for syncing the script to the second. Syncing to t
             print("Loop failed at: ", datetime.datetime.now().time(), "\n Attempting again in 1s") # You dont need me!
             time.sleep(1)
 start() #Starts the script :D
+
