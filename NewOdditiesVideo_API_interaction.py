@@ -3,19 +3,14 @@ import feedparser, webbrowser, datetime, time
 CHANNEL_ID = "UC2NVEa8NLT0sZA5v1tVatqQ"
 RSS_URL = f"https://www.youtube.com/feeds/videos.xml?channel_id={CHANNEL_ID}"
 
-def main():
-    while True:
-        now = datetime.datetime.now()
-        feed = feedparser.parse(RSS_URL) # finds the feed based on the Channel
-        latest_video = feed.entries[0] # gets the latest video
-        uploaded = datetime.date(*latest_video.published_parsed[:3]) # gets the day it was uploaded
-        if uploaded == now.date(): # checks if it was uploaded today
-            webbrowser.open(latest_video.link) # gets and opens the link
-            break # closes the script
-        else:
-            print("Video not uploaded")
-            time.sleep(300) # waits 5 min
-
-main()
+while True:
+    feed = feedparser.parse(RSS_URL)
+    if feed.entries:
+        latest = feed.entries[0] # gets video
+        if datetime.date(*latest.published_parsed[:3]) == datetime.date.today(): # checks upload date
+            webbrowser.open(latest.link) # opens link
+            break # closes sctipt
+    print("Video not uploaded")
+    time.sleep(300) # 5 min delay before next check.
 
 # we dont need to be accurate anymore as we aren't tied to a schedule rather we are tied to the Channel ID which is a tad annoying to get but not too bad
