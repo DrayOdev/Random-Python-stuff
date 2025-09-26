@@ -10,8 +10,7 @@ def main():
         latest_video = feed.entries[0] # gets the latest video
         uploaded = datetime.date(*latest_video.published_parsed[:3]) # gets the day it was uploaded
         if uploaded == now.date(): # checks if it was uploaded today
-            latest_video = feed["entries"][0].link # gets the link
-            webbrowser.open(latest_video) # opens the link
+            webbrowser.open(latest_video.link) # gets and opens the link
             break # closes the script
         else:
             print("Video not uploaded")
