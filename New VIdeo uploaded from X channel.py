@@ -1,23 +1,18 @@
-import requests, re, webbrowser, datetime, time
+import feedparser, webbrowser, datetime, time
 
-UPLOAD_HOUR: int = 0
-UPLOAD_MINUTE: int = 53
-channel_url: str
-loop: bool = False
+CHANNEL_ID = ""
+RSS_URL = f"https://www.youtube.com/feeds/videos.xml?channel_id={CHANNEL_ID}"
 
-def Main():
-    channel_url = input("Please enter a channel URL: ")    
-    if channel_url != "":
-        loop = True
-    
-    while loop:
-        now = datetime.datetime.now()
-        if now.hour == UPLOAD_HOUR and now.minute == UPLOAD_MINUTE:
-            html = requests.get(channel_url + "/videos").text
-            url = "https://www.youtube.com/watch?v=" + re.search('(?<="videoId":").*?(?=")', html).group()
-            webbrowser.open(url)
-            break
-        else:
-            time.sleep(60 - now.second)
-
-Main()
+while True:
+    CHANNEL_ID = input("Please enter the channel ID: ")
+    if CHANNEL_ID == "":
+        break
+    else:
+        feed = feedparser.parse(RSS_URL)
+        if feed.entries:
+            latest = feed.entries[0] # gets video
+            if datetime.date(*latest.published_parsed[:3]) == datetime.date.today(): # checks upload date
+                webbrowser.open(latest.link) # opens link
+                break # closes sctipt
+        print("Video not uploaded")
+        time.sleep(300) # 5 min delay before next check.
