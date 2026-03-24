@@ -108,7 +108,12 @@ def logic_gate():
             NANDCASE.parse(input_1, input_2)
         case "5":
             NORCASE.parse(input_1, input_2)
-
+    print("If you encounter any mistakes with this interpreter please create an issue on my Github :D ")
+    again = input("Do you want to continue? (y/n): ")
+    if again == "y":
+        logic_gate()
+    else:
+        print("Thank yo")
 
 
 
