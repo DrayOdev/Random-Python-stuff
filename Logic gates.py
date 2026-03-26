@@ -1,7 +1,9 @@
 # LOGIC GATES
 gates = ["AND", "OR", "XOR", "NAND", "NOR" ]
-global input_1
-global input_2
+conditions = ["A:", "B:", "Gates:"]
+global A
+global B
+file = open("save.txt", "a+")
 
 class AND:
     def __init__(self, _0, _1):
@@ -75,7 +77,12 @@ def start():
     print("Below are the supported gate types.")
     print("____________________________________________________________________________")
     print("1. AND\n2. OR\n3. XOR\n4. NAND\n5. NOR")
-
+    if file.readlines() != "":
+        q = input("ERR- FILE DETECTED! Would you like to wipe the file?: [y/n] ")
+        if q == "y":
+            file.truncate(0)
+        else:
+            return
 
 def logic_gate():
     ANDCASE = AND(0,0)
@@ -84,36 +91,46 @@ def logic_gate():
     NANDCASE = NAND(0,0)
     NORCASE = NOR(0, 0)
     print("please provide two inputs")
-    input_1 = int(input("First input: "))
-    input_2 = int(input("Second input: "))
+    A = int(input("First input: "))
+    B = int(input("Second input: "))
     gate = input("Please provide a gate type: ").upper()
     match gate:
         case "AND":
-                ANDCASE.parse(input_1, input_2)
+                ANDCASE.parse(A, B)
         case "OR":
-                ORCASE.parse(input_1, input_2)
+                ORCASE.parse(A, B)
         case "XOR":
-                XORCASE.parse(input_1, input_2)
+                XORCASE.parse(A, B)
         case "NAND":
-            NANDCASE.parse(input_1, input_2)
+            NANDCASE.parse(A, B)
         case "NOR":
-            NORCASE.parse(input_1, input_2)
+            NORCASE.parse(A, B)
         case "1":
-            ANDCASE.parse(input_1, input_2)
+            ANDCASE.parse(A, B)
         case "2":
-            ORCASE.parse(input_1, input_2)
+            ORCASE.parse(A, B)
         case "3":
-            XORCASE.parse(input_1, input_2)
+            XORCASE.parse(A, B)
         case "4":
-            NANDCASE.parse(input_1, input_2)
+            NANDCASE.parse(A, B)
         case "5":
-            NORCASE.parse(input_1, input_2)
+            NORCASE.parse(A, B)
+    file.write("A:\n")
+    file.write(str(A)+"\n")
+    file.write("B:\n")
+    file.write(str(B)+"\n")
+    file.write("Gate:\n"+str(gate)+"\n")
     print("If you encounter any mistakes with this interpreter please create an issue on my Github :D ")
     again = input("Do you want to continue? (y/n): ")
     if again == "y":
         logic_gate()
-    else:
-        print("Thank yo")
+        file.seek(0)
+        print(file.readline())
+    elif again != "y":
+        file.seek(0)
+        for line in file:
+            print(line.rstrip("\n"))
+        print("Thank you for using the program")
 
 
 
@@ -121,3 +138,5 @@ def logic_gate():
 
 start()
 logic_gate()
+
+
