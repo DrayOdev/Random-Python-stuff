@@ -1,9 +1,11 @@
 # LOGIC GATES
+import linecache as lc
 gates = ["AND", "OR", "XOR", "NAND", "NOR" ]
 conditions = ["A:", "B:", "Gates:"]
 global A
 global B
 file = open("save.txt", "a+")
+half_adder = ['3\n', '1\n']
 
 class AND:
     def __init__(self, _0, _1):
@@ -77,12 +79,37 @@ def start():
     print("Below are the supported gate types.")
     print("____________________________________________________________________________")
     print("1. AND\n2. OR\n3. XOR\n4. NAND\n5. NOR")
-    if file.readlines() != "":
-        q = input("ERR- FILE DETECTED! Would you like to wipe the file?: [y/n] ")
+    if lc.getline("save.txt",1) != "\n":
+        q = input("FILE DETECTED! Would you like to wipe the file?: [y/n] ")
         if q == "y":
             file.truncate(0)
         else:
-            return
+            q1 = input("Would you like to read the file?: [y/n] ")
+            if q1 == "y":
+                read_file()
+
+def read_file():
+    order = []
+    line_num: int = 0
+    loops: int = 0
+    while line_num < len(lc.getlines("save.txt")) - 1:
+
+        line_num += 2
+        line = lc.getline("save.txt", line_num)
+        match loops:
+            case 0:
+                print("A:\n" + str(line).rstrip("\n"))
+                loops += 1
+            case 1:
+                print("B:\n" + str(line).rstrip("\n"))
+                loops += 1
+            case 2:
+                print("Gate:\n" + str(line).rstrip("\n"))
+                order.append(line)
+                print(order)
+                loops = 0
+        if order == half_adder:
+            print("THATS A HALF ADDER")
 
 def logic_gate():
     ANDCASE = AND(0,0)
@@ -90,21 +117,31 @@ def logic_gate():
     XORCASE = XOR(0,0)
     NANDCASE = NAND(0,0)
     NORCASE = NOR(0, 0)
-    print("please provide two inputs")
-    A = int(input("First input: "))
-    B = int(input("Second input: "))
+    print(lc.getline("save.txt", 1))
+    if lc.getline("save.txt",1) == "\n":
+        print("please provide two inputs")
+        A = int(input("First input: "))
+        B = int(input("Second input: "))
+    else:
+        A = lc.getline("save.txt", 2).rstrip("\n")
+        B = lc.getline("save.txt", 4).rstrip("\n")
     gate = input("Please provide a gate type: ").upper()
     match gate:
         case "AND":
                 ANDCASE.parse(A, B)
+                gate = 1
         case "OR":
                 ORCASE.parse(A, B)
+                gate = 2
         case "XOR":
                 XORCASE.parse(A, B)
+                gate = 3
         case "NAND":
             NANDCASE.parse(A, B)
+            gate = 4
         case "NOR":
             NORCASE.parse(A, B)
+            gate = 5
         case "1":
             ANDCASE.parse(A, B)
         case "2":
@@ -131,9 +168,6 @@ def logic_gate():
         for line in file:
             print(line.rstrip("\n"))
         print("Thank you for using the program")
-
-
-
 
 
 start()
