@@ -4,8 +4,10 @@ gates = ["AND", "OR", "XOR", "NAND", "NOR" ]
 conditions = ["A:", "B:", "Gates:"]
 global A
 global B
+global C
 file = open("save.txt", "a+")
-half_adder = ['3\n', '1\n']
+half_adder = ['3', '1']
+order = []
 
 class AND:
     def __init__(self, _0, _1):
@@ -89,7 +91,7 @@ def start():
                 read_file()
 
 def read_file():
-    order = []
+
     line_num: int = 0
     loops: int = 0
     while line_num < len(lc.getlines("save.txt")) - 1:
@@ -105,18 +107,40 @@ def read_file():
                 loops += 1
             case 2:
                 print("Gate:\n" + str(line).rstrip("\n"))
-                order.append(line)
-                print(order)
+                order.append(line.rstrip("\n"))
                 loops = 0
-        if order == half_adder:
-            print("THATS A HALF ADDER")
+
 
 def logic_gate():
-    ANDCASE = AND(0,0)
-    ORCASE = OR(0,0)
-    XORCASE = XOR(0,0)
-    NANDCASE = NAND(0,0)
+    ANDCASE = AND(0, 0)
+    ORCASE = OR(0, 0)
+    XORCASE = XOR(0, 0)
+    NANDCASE = NAND(0, 0)
     NORCASE = NOR(0, 0)
+    if order == half_adder:
+        print("You have created a half adder, lets use it.")
+        print("The structure of the half adder is: XOR then AND, Keep this in mind when using the half adder.")
+        A = int(input("First input: "))
+        B = int(input("Second input: "))
+        #C = int(input("Third input: REDUNDANT FOR NOW AS THIS IS USED FOR FULL ADDERS"))
+        #XORCASE.parse(A, B)
+        #ANDCASE.parse(A, B)
+        # hard coded implementation because i was lazy
+        if (A == 1 and B == 0) or (A == 0 and B == 1):
+            print("The sum of this calculation is: 1")
+        else:
+            print("The sum of this calculation is: 0")
+        if A == 1 and B == 1:
+            print("The carry of this calculation is: 1")
+        else:
+            print("The carry of this calculation is: 0")
+
+
+
+        return # blocks the rest of the script from running.
+
+
+
     print(lc.getline("save.txt", 1))
     if lc.getline("save.txt",1) == "\n":
         print("please provide two inputs")
@@ -172,5 +196,3 @@ def logic_gate():
 
 start()
 logic_gate()
-
-
