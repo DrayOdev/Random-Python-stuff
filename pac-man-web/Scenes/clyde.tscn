@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://2uhm2qse5ms6"]
+
+[ext_resource type="Script" uid="uid://cpg2lrxvyvlul" path="res://Scripts/clyde.gd" id="1_fv8ig"]
+[ext_resource type="Texture2D" uid="uid://c5jih8g3k7qgw" path="res://Sprites/clyde.png" id="2_fv8ig"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arvl7"]
+atlas = ExtResource("2_fv8ig")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h30sd"]
+atlas = ExtResource("2_fv8ig")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mphu2"]
+atlas = ExtResource("2_fv8ig")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nmyt"]
+atlas = ExtResource("2_fv8ig")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_07w68"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arvl7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h30sd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mphu2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nmyt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7t3rx"]
+radius = 2.5
+
+[node name="Clyde" type="CharacterBody2D" unique_id=640567126 groups=["Enemy"]]
+collision_layer = 16
+script = ExtResource("1_fv8ig")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1661747188]
+texture_filter = 1
+scale = Vector2(0.625, 0.625)
+sprite_frames = SubResource("SpriteFrames_07w68")
+
+[node name="Nav" type="NavigationAgent2D" parent="." unique_id=681227992]
+path_desired_distance = 1.5
+target_desired_distance = 1.0
+path_max_distance = 10.0
+path_postprocessing = 1
+simplify_path = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.9607843, 0.3529412, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1988105340]
+shape = SubResource("CircleShape2D_7t3rx")
+
+[connection signal="target_reached" from="Nav" to="." method="_on_nav_target_reached"]

@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://cin0rtj0nlvyd"]
+
+[ext_resource type="Script" uid="uid://brrrfmd2brlng" path="res://Scripts/inky.gd" id="1_p8cik"]
+[ext_resource type="Texture2D" uid="uid://dnhq5hcvn2bbt" path="res://Sprites/inky.png" id="2_p8cik"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y83qo"]
+atlas = ExtResource("2_p8cik")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qi5gk"]
+atlas = ExtResource("2_p8cik")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fsrb"]
+atlas = ExtResource("2_p8cik")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owjux"]
+atlas = ExtResource("2_p8cik")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_605pc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y83qo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qi5gk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fsrb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owjux")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7t3rx"]
+radius = 2.5
+
+[node name="Inky" type="CharacterBody2D" unique_id=640567126 groups=["Enemy"]]
+collision_layer = 16
+script = ExtResource("1_p8cik")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1661747188]
+texture_filter = 1
+scale = Vector2(0.625, 0.625)
+sprite_frames = SubResource("SpriteFrames_605pc")
+
+[node name="Nav" type="NavigationAgent2D" parent="." unique_id=681227992]
+path_desired_distance = 1.5
+target_desired_distance = 1.0
+path_max_distance = 10.0
+path_postprocessing = 1
+simplify_path = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.007843138, 0.85490197, 0.84705883, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1988105340]
+shape = SubResource("CircleShape2D_7t3rx")
+
+[connection signal="target_reached" from="Nav" to="." method="_on_nav_target_reached"]

@@ -1,0 +1,57 @@
+[gd_scene format=4 uid="uid://dumkf4reexja6"]
+
+[ext_resource type="Script" uid="uid://d4c0ts7opgw2f" path="res://Scripts/win.gd" id="1_3mm25"]
+[ext_resource type="Texture2D" uid="uid://dm48knp7jv4mn" path="res://Sprites/PacManWalls.png" id="1_j84t1"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3mm25"]
+texture = ExtResource("1_j84t1")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_611cj"]
+sources/0 = SubResource("TileSetAtlasSource_3mm25")
+
+[node name="Win" type="Node2D" unique_id=1184476639]
+process_mode = 3
+script = ExtResource("1_3mm25")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1589617162]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAEAAAABAAAAAAACAAEAAAABAAMAAAACAAEAACAAAAMAAAAAAAIAAAAAAAIAAAACAAEAAGAAAAEAAAACAAEAAGABAAEAAAADAAEAAAABAAIAAAADAAEAAAAFAAAAAAACAAEAAAAFAAEAAAADAAEAAAAFAAIAAAADAAEAAAAFAAMAAAACAAEAACAGAAAAAAACAAEAAAAGAAEAAAADAAEAAAAGAAIAAAADAAEAAAAGAAMAAAACAAEAACAHAAAAAAABAAEAAAAHAAEAAAACAAEAAFAHAAIAAAACAAEAAFAHAAMAAAABAAIAAAACAAAAAAACAAEAAAADAAAAAAACAAEAAAAEAAAAAAACAAEAAAACAAMAAAACAAEAACADAAMAAAACAAEAACAEAAMAAAACAAEAACAEAAEAAAADAAEAAAADAAEAAAADAAEAAAACAAEAAAADAAEAAAACAAIAAAADAAEAAAADAAIAAAADAAEAAAAEAAIAAAADAAEAAAA=")
+tile_set = SubResource("TileSet_611cj")
+
+[node name="Control" type="Control" parent="." unique_id=159471826]
+process_mode = 3
+z_index = 2
+layout_mode = 3
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 64.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Control" unique_id=559470459]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="Control/CenterContainer" unique_id=1643531017]
+layout_mode = 2
+text = "RETRY?"
+flat = true
+
+[connection signal="pressed" from="Control/CenterContainer/Button" to="." method="_on_button_pressed"]

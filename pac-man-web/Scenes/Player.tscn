@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://cpu6wjkv0jk0"]
+
+[ext_resource type="Script" uid="uid://cli6hvykfa5tu" path="res://Scripts/player.gd" id="1_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://c2ycc7v8msrql" path="res://Sprites/pacman.png" id="3_gntrk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kyqiw"]
+size = Vector2(12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dewec"]
+atlas = ExtResource("3_gntrk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ixxa"]
+atlas = ExtResource("3_gntrk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nn08x"]
+atlas = ExtResource("3_gntrk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52ee3"]
+atlas = ExtResource("3_gntrk")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bhhdu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dewec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ixxa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nn08x")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_52ee3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52ee3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nn08x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ixxa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gntrk"]
+radius = 7.0
+
+[node name="Player" type="CharacterBody2D" unique_id=1993605328]
+collision_layer = 8
+script = ExtResource("1_kyqiw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=113124621]
+shape = SubResource("RectangleShape2D_kyqiw")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2055828175]
+texture_filter = 1
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_bhhdu")
+autoplay = "default"
+frame_progress = 0.84650785
+
+[node name="ray" type="RayCast2D" parent="." unique_id=1334545898]
+target_position = Vector2(0, 16)
+
+[node name="Collection" type="Area2D" parent="." unique_id=1347287618]
+collision_mask = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collection" unique_id=96212972]
+shape = SubResource("CircleShape2D_gntrk")
+
+[connection signal="area_entered" from="Collection" to="." method="_on_collection_area_entered"]
+[connection signal="body_entered" from="Collection" to="." method="_on_collection_body_entered"]

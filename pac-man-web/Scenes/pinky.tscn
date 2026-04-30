@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dveiugrlehrr4"]
+
+[ext_resource type="Script" uid="uid://dx7felburg7cd" path="res://Scripts/pinky.gd" id="1_30wfw"]
+[ext_resource type="Texture2D" uid="uid://crbicoscr5bpw" path="res://Sprites/pinky.png" id="2_30wfw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n82i5"]
+atlas = ExtResource("2_30wfw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yh1wh"]
+atlas = ExtResource("2_30wfw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14xkx"]
+atlas = ExtResource("2_30wfw")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph78o"]
+atlas = ExtResource("2_30wfw")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0f5a5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n82i5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yh1wh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14xkx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph78o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7t3rx"]
+radius = 2.5
+
+[node name="Pinky" type="CharacterBody2D" unique_id=640567126 groups=["Enemy"]]
+collision_layer = 16
+script = ExtResource("1_30wfw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1661747188]
+texture_filter = 1
+scale = Vector2(0.625, 0.625)
+sprite_frames = SubResource("SpriteFrames_0f5a5")
+
+[node name="Nav" type="NavigationAgent2D" parent="." unique_id=681227992]
+path_desired_distance = 1.5
+target_desired_distance = 1.0
+path_max_distance = 10.0
+path_postprocessing = 1
+simplify_path = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.99215686, 0.3019608, 0.827451, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1988105340]
+shape = SubResource("CircleShape2D_7t3rx")
+
+[connection signal="target_reached" from="Nav" to="." method="_on_nav_target_reached"]
